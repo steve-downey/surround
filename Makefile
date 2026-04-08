@@ -57,7 +57,7 @@ define emacs_error_message
 Please install emacs or set the EMACS variable to the path of the emacs binary.
 endef
 
-$(error "$(emacs_error_message)")
+$(warn "$(emacs_error_message)")
 endif
 
 .PHONY: env
@@ -121,7 +121,7 @@ Please install uv or set the UV variable to the path of the uv binary.
 The makefile target "install-uv" will run ``$(install_uv_cmd)''
 endef
 
-$(error "$(uv_error_message)")
+$(warn "$(uv_error_message)")
 endif
 
 .PHONY: install-uv
