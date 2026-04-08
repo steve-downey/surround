@@ -10,7 +10,7 @@ MINIMAL_DIR=.minimal-emacs.d
 # Use find to find file names such that globs are expanded while prevent
 # splitting paths on spaces
 mapfile -t files <<< \
-        "$(ls *.el)"
+        "$(ls ./*.el)"
 
 ${EMACS} -Q --batch \
          --init-dir=./ \

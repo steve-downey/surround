@@ -4,14 +4,13 @@ set -x
 set -e
 
 EMACS=${EMACS:=emacs}
-PACKAGE_DIR=.
 MINIMAL_DIR=.minimal-emacs.d
 
 exit_code=0
 
 cleanup () {
     exit_code=$?
-    rm -vf *.elc
+    rm -vf ./*.elc
     exit $exit_code
 }
 
@@ -20,7 +19,7 @@ trap cleanup ERR INT TERM
 # Use find to find file names such that globs are expanded while prevent
 # splitting paths on spaces
 mapfile -t files <<< \
-        "$(ls *.el)"
+        "$(ls ./*.el)"
 
 ${EMACS} -Q --batch \
          --init-dir=./ \
