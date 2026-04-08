@@ -1,0 +1,130 @@
+#+STARTUP: showeverything
+#+STARTUP: literallinks
+#+OPTIONS: toc:nil num:nil author:nil
+
+* checkdoc-batch.el - Run checkdoc in batch mode
+:PROPERTIES:
+:CUSTOM_ID: checkdoc-batch.el---run-checkdoc-in-batch-mode
+:END:
+** Description
+:PROPERTIES:
+:CUSTOM_ID: description
+:END:
+The =checkdoc-batch= Emacs package is designed to help running =checkdoc= in a
+batch mode. This is useful, for example to run it as one of linters in a CI
+pipeline.
+** Installation
+:PROPERTIES:
+:CUSTOM_ID: installation
+:END:
+
+If you're using [[https://github.com/cask/cask][cask]] you can do something like
+#+begin_src emacs-lisp
+(development
+ (depends-on "checkdoc-batch"
+             :git "https://github.com/pkryger/ckeckdoc-batch.el.git"))
+#+end_src
+
+If you want to install the package into your current Emacs, you can use
+built-in =use-package=:
+
+#+begin_src emacs-lisp :results value silent
+(use-package checkdoc-batch
+  :defer t
+  :vc (:url "https://github.com/pkryger/checkdoc-batch.el.git"
+       :rev :newest)))
+#+end_src
+
+** Usage
+:PROPERTIES:
+:CUSTOM_ID: usage
+:END:
+In a command line run something like:
+
+#+begin_src sh :results output silent
+emacs --batch \
+      --load checkdoc-batch \
+      --funcall checkdoc-batch \
+      -- file1.el file2.el ... fileN.el
+#+end_src
+
+You can customize =checkdoc-batch-ignored= to ignore some files regardless if
+these are passed on command line.  This can become handy, when for example
+you're using [[https://github.com/cask/cask][cask]] and you want to relay on
+=cask files=.
+
+** Generate compile command from =flycheck=
+:PROPERTIES:
+:CUSTOM_ID: generate-compile-command-from-flycheck
+:END:
+
+Run this snippet in an ~org-mode~ buffer:
+#+begin_src elisp
+(require 'flycheck)
+(when-let* ((flycheck-command (let (temp-file)
+                                (unwind-protect
+                                    (progn
+                                      (setq temp-file
+                                            (make-temp-file "checkdoc-batch"))
+                                      (with-current-buffer
+                                          (find-file-noselect temp-file)
+                                        (emacs-lisp-mode)
+                                        (flycheck-checker-shell-command
+                                         'emacs-lisp-checkdoc)))
+                                  (when temp-file
+                                    (delete-file temp-file)))))
+            (unescaped-command (replace-regexp-in-string
+                                (rx "\\" (group any))
+                                (rx (backref 1))
+                                flycheck-command))
+            (flycheck-script (replace-regexp-in-string
+                              (rx (one-or-more any)
+                                  " --eval " (group (one-or-more any))
+                                  " -- " (one-or-more any))
+                              "(quote \\1)"
+                              unescaped-command)))
+  (pp
+   (eval (car (read-from-string flycheck-script)))))
+#+end_src
+
+#+RESULTS:
+#+begin_example
+(progn
+  (defvar jka-compr-inhibit)
+  (unwind-protect
+      (let
+          ((jka-compr-inhibit t))
+        (when
+            (equal
+             (car command-line-args-left)
+             "--")
+          (setq command-line-args-left
+                (cdr command-line-args-left)))
+        (unless
+            (require 'elisp-mode nil 'no-error)
+          (require 'lisp-mode))
+        (require 'checkdoc)
+        (let
+            ((source
+              (car command-line-args-left))
+             (process-default-directory default-directory))
+          (with-temp-buffer
+            (insert-file-contents source 'visit)
+            (setq buffer-file-name source)
+            (setq default-directory process-default-directory)
+            (with-demoted-errors "Error in checkdoc: %S"
+              (delay-mode-hooks
+                (emacs-lisp-mode))
+              (setq delayed-mode-hooks nil)
+              (checkdoc-current-buffer t)
+              (with-current-buffer checkdoc-diagnostic-buffer
+                (princ
+                 (buffer-substring-no-properties
+                  (point-min)
+                  (point-max)))
+                (kill-buffer))))))
+    (setq command-line-args-left nil)))
+#+end_example
+
+Modify the output above to process multiple files and signal error when
+anything has been reported. See [[file:checkdoc-batch.el][checkdoc-batch.el]].
