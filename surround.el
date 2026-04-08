@@ -43,7 +43,7 @@
   "#+transclude: [[file:%s::%s]] :lines 2- :src %s :end \"%s end\"")
 
 (defun uuid-surround--blank-line-p ()
-  "Returns t if line is empty or composed only of syntactic whitespace."
+  "Return t if line is empty or composed only of syntactic whitespace."
   (save-excursion
     (goto-char (point))
     (beginning-of-line)
