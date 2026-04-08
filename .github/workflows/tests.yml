@@ -31,7 +31,7 @@ jobs:
           - snapshot
     steps:
       - name: Harden the runner (Audit all outbound calls)
-        uses: step-security/harden-runner@main
+        uses: step-security/harden-runner@fe104658747b27e96e4f7e80cd0a94068e53901d # main
         with:
           egress-policy: audit
 
@@ -39,7 +39,7 @@ jobs:
         with:
           submodules: 'true'
 
-      - uses: purcell/setup-emacs@master
+      - uses: purcell/setup-emacs@bdc64dc730ae1fcba200bfd52cb1b4cf6159cbe5 # master
         with:
           version: ${{ matrix.emacs_version }}
 
