@@ -28,5 +28,5 @@ END_HEREDOC
 ${EMACS} -Q --batch \
          --init-dir=./ \
          --eval "$PROGN" \
-         --funcall relint-batch . \
+         --funcall relint-batch \
          "${files[@]}"
