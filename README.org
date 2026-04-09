@@ -103,7 +103,7 @@ More interesting may be the .minimal-emacs.d vendored in from [[https://github.c
 * Example Project
 This is the reason for the whole tiny bit of code.
 
-I live in great fear of putting broken code up in a presenation.
+I live in great fear of putting broken code up in a presentation.
 
 I want to test it, somehow.
 

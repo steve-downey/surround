@@ -1,12 +1,12 @@
-- [Surround Source Code with UUID for Transclusion](#orgbf38751)
-  - [Before](#orgf97aa35)
-  - [After](#orga98b3a5)
-- [Top Level Project](#orgc16b2fc)
-- [Example Project](#org497f129)
+- [Surround Source Code with UUID for Transclusion](#orgbe2f9f8)
+  - [Before](#org2724462)
+  - [After](#orgc5d1756)
+- [Top Level Project](#orgb9bf595)
+- [Example Project](#org16bfa37)
 
 
 
-<a id="orgbf38751"></a>
+<a id="orgbe2f9f8"></a>
 
 # Surround Source Code with UUID for Transclusion
 
@@ -15,7 +15,7 @@ Surround the currently selected code with comments containing UUIDs that work as
 The comment style is based on the mode of the current buffer. The comment will be placed at the beginning of the line containing the current region. The ending comment will be placed on the line after the current region, unless the ending line is blank, as defined by the syntax for the buffer.
 
 
-<a id="orgf97aa35"></a>
+<a id="org2724462"></a>
 
 ## Before
 
@@ -28,7 +28,7 @@ int main() {
 ```
 
 
-<a id="orga98b3a5"></a>
+<a id="orgc5d1756"></a>
 
 ## After
 
@@ -43,7 +43,7 @@ int main() {
 ```
 
 
-<a id="orgc16b2fc"></a>
+<a id="orgb9bf595"></a>
 
 # Top Level Project
 
@@ -54,13 +54,13 @@ I have vendored in via `git subtree` the checkdoc code from pkryger as well.
 More interesting may be the .minimal-emacs.d vendored in from [James Cherti's minimal emacs.d project.](https://github.com/jamescherti/minimal-emacs.d) This was of great use in making sure there was a lightweight but fully functional emacs configuration to run batch jobs from the command line, driven by a [Makefile](./Makefile).
 
 
-<a id="org497f129"></a>
+<a id="org16bfa37"></a>
 
 # Example Project
 
 This is the reason for the whole tiny bit of code.
 
-I live in great fear of putting broken code up in a presenation.
+I live in great fear of putting broken code up in a presentation.
 
 I want to test it, somehow.
 
