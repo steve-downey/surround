@@ -38,7 +38,6 @@
 (require 'use-package-ensure)
 (setq use-package-always-ensure t)
 (setq use-package-compute-statistics t)
-
 ;;; remove a package from the builtin list so it can be upgraded
 (defun wg21org-ignore-builtin (pkg)
   (assq-delete-all pkg package--builtins)
