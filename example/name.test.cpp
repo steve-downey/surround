@@ -9,4 +9,6 @@
 
 TEST(Test, Fail) { SUCCEED(); }
 
+// 03013d1f-bcc1-4d3e-9701-3ed1a15c6370
 TEST(TestName, Steve) { ASSERT_EQ(example::name(), "Steve"); }
+// 03013d1f-bcc1-4d3e-9701-3ed1a15c6370 end

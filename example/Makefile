@@ -21,6 +21,8 @@ MARKER = .initialized.venv.stamp
 
 PRE_COMMIT := $(UV) run pre-commit
 
+EMACS := $(shell command -v emacs 2> /dev/null)
+
 .update-submodules:
 	git submodule update --init --recursive
 	touch .update-submodules
@@ -255,6 +257,40 @@ endif
 .PHONY: install-uv
 install-uv: ## install uv via `pipx install uv`
 	$(install_uv_cmd)
+
+example.html: example.org
+	$(EMACS) --init-directory=.emacs.d/ \
+			--batch --load .emacs.d/init.el  \
+			-f package-initialize \
+			--eval '(setq enable-local-variables :all)' \
+			--visit example.org \
+			--eval '(org-transclusion-mode t)' \
+			-f org-html-export-to-html
+
+.PHONY: clean-emacs.d
+clean-emacs.d:
+	-rm -rf .emacs.d/eln-cache
+	-rm -rf .emacs.d/elpa*
+
+realclean: clean-emacs.d
+
+.PHONY: clean-example
+clean-example:
+	-rm example.html
+
+.PHONY: presentation
+presentation: test
+presentation: example.html
+
+clean: clean-example
+
+.PHONY: elpa
+elpa:
+	$(EMACS) --init-directory=.emacs.d/ --batch --load .emacs.d/init.el
+
+.PHONY: refresh
+refresh:
+	$(EMACS) --init-directory=.emacs.d/ --batch --load .emacs.d/init.el -f package-upgrade-all
 
 # Help target
 .PHONY: help
