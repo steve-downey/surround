@@ -1,0 +1,8 @@
+cmake.bld
+/papers/generated/
+compile_commands.json
+.update-submodules
+.use-docker
+/.build/
+/.cache/
+uv.lock
