@@ -94,7 +94,7 @@ int main() {
 
 * Top Level Project
 
-The overdone project infrastructure in the top-level project is to support GitHub CI and various bits of code quality. The CI is mostly driven by shell scripts in the .ci directory, which are borrowed from the [[git@github.com:emacs-exordium/exordium.git][Exordium Project]] and were written by [[https://github.com/pkryger][Przemysław Kryger]] who despaired of us breaking our shared emacs configuration. The [[https://github.com/pre-commit/pre-commit][pre-commit framework]] infrastructure is my fault, but helps me keep YAML less broken, and reduced the number of spelling mistakes and formatting errors. Running it automatically keeps me honest.
+The overdone project infrastructure in the top-level project is to support GitHub CI and various bits of code quality. The CI is mostly driven by shell scripts in the .ci directory, which are borrowed from the [[https://github.com/emacs-exordium/exordium][Exordium Project]] and were written by [[https://github.com/pkryger][Przemysław Kryger]] who despaired of us breaking our shared emacs configuration. The [[https://github.com/pre-commit/pre-commit][pre-commit framework]] infrastructure is my fault, but helps me keep YAML less broken, and reduced the number of spelling mistakes and formatting errors. Running it automatically keeps me honest.
 
 I have vendored in via ~git subtree~ the checkdoc code from pkryger as well.
 
@@ -109,4 +109,4 @@ I want to test it, somehow.
 
 Using org-babel has turned out to be more cumbersome than I would like, so I was very happy to find org-transclude. I can make building my presentation dependent on the tests passing and extract the code snippets I want to show by marking up the actual compiled source. The project in the ~example~ directory is a complete C++ hello world project, and the results in example.md and example.html are output from org-export. The export can be run by ~make presentation~, which builds and runs the project and runs the org export. Although the dependencies are not quite right, yet.
 
-This project also has overdone infrastructure, largely borrowed from the [[https://github.com/bemanproject][Beman Project]], reusing the infra from [[git@github.com:bemanproject/infra.git][bemanproject/infra]] and [[git@github.com:bemanproject/exemplar.git][bemanproject/exemplar]].
+This project also has overdone infrastructure, largely borrowed from the [[https://github.com/bemanproject][Beman Project]], reusing the infra from [[https://github.com/bemanproject/infra][bemanproject/infra]] and [[https://github.com/bemanproject/exemplar][bemanproject/exemplar]].
