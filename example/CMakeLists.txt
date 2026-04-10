@@ -79,7 +79,7 @@ if(NAME_ENABLE_TESTING)
             WARNING
             "
 No provider for GTest. Unable to build tests.
-Consider using CMAKE_PROJECT_TOP_LEVEL_INCLUDES=./cmake/use-fetch-content.cmake.
+Consider using CMAKE_PROJECT_TOP_LEVEL_INCLUDES=infra/cmake/use-fetch-content.cmake.
 "
         )
     endif()

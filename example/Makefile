@@ -52,7 +52,7 @@ _build_path := $(patsubst %/,%,$(_build_path))
 VCPKG ?= $(shell command -v vcpkg 2> /dev/null)
 
 ifeq ($(VCPKG),)
-	_cmake_top_level?="./cmake/use-fetch-content.cmake"
+	_cmake_top_level?="infra/cmake/use-fetch-content.cmake"
 	_toolchain:=$(_local_toolchain)
 	_args=-DBEMANINFRA_googletest_REPO=file:///home/sdowney/bld/googletest/googletest.git
 else
@@ -220,7 +220,7 @@ docs: ## Build the docs with Doxygen
 	doxygen docs/Doxyfile
 
 .PHONY: mrdocs
-mrdocs: ## Build the docs with Doxygen
+mrdocs: ## Build the docs with MrDocs
 	-rm -rf docs/adoc
 	cd docs && NO_COLOR=1 mrdocs mrdocs.yml 2>&1 | sed 's/\x1b\[[0-9;]*m//g'
 	find docs/adoc -name '*.adoc' | xargs asciidoctor

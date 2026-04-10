@@ -2,6 +2,7 @@ include_guard(GLOBAL)
 
 set(CMAKE_C_COMPILER gcc)
 set(CMAKE_CXX_COMPILER g++)
+set(GCOV_EXECUTABLE "gcov" CACHE STRING "GCOV executable")
 
 set(CMAKE_CXX_FLAGS "-Wall -Wextra " CACHE STRING "CXX_FLAGS" FORCE)
 
