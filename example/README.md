@@ -36,3 +36,13 @@ view-coverage                  View the coverage report
 ```
 
 `docs` and `mrdocs` are not included in the example at the moment.
+
+`lint` uses pre-commit to drive the various lint tools.
+
+Use this project as you see fit.
+
+The code in infra is Apache 2.0 licensed, see https://github.com/bemanproject/infra for more details. The CMakeLists.txt is derived from https://github.com/bemanproject/exemplar the purpose of which is to be a concrete but boring example of a well behaved CMake C++ project using the current tools and practices.
+
+The css in `etc/`  is exported from emacs based on the modus tinted themes via `org-html-htmlize-generate-css` .
+
+The Makefile that drives the workflow is mine, is Apache 2.0 licensed, and take what you need from it. No part of it is interesting enough to be protected.
