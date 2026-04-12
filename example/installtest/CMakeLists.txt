@@ -11,12 +11,7 @@ enable_testing()
 
 # Find the installed package
 set(NAME_INSTALL_DIR "../.install/lib/cmake/example.name/")
-find_package(
-    example.name
-    REQUIRED
-    PATHS ${NAME_INSTALL_DIR}
-    NO_DEFAULT_PATH
-)
+find_package(example.name REQUIRED PATHS ${NAME_INSTALL_DIR} NO_DEFAULT_PATH)
 
 # Add the test executable
 add_executable(TestInstalledLibrary test.cpp)

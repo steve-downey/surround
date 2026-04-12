@@ -1,6 +1,6 @@
 // hello.cpp -*-C++-*-
 
-#include <name.hpp>
+#include <smd/example/name.hpp>
 
 #include <print>
 
