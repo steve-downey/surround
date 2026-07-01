@@ -37,7 +37,7 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: .emacs.d
       - name: Link $GITHUB_WORKSPACE/.emacs.d to $HOME/.emacs.d
@@ -58,7 +58,7 @@ jobs:
       - name: Verify no obsolete cl- functions
         run: '"${HOME}/.emacs.d/.ci/unit-test-cl.sh"'
       - name: Checkout checkdoc-batch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         if: contains(fromJSON('["29.4", "30.1", "snapshot", "release-snapshot"]'),
           matrix.emacs_version)
         with:
@@ -96,10 +96,10 @@ jobs:
       - uses: purcell/setup-emacs@master
         with:
           version: ${{ matrix.emacs_version }}
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           path: .emacs.d
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           repository: pkryger/exordium-commontap
           path: .emacs.d/taps/commontap
