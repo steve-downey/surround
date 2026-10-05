@@ -14,33 +14,33 @@
 ;;
 
 (require 'org-id)
+(require 'org-src)
+(require 'seq)
+(require 'subr-x)
 
 ;;; Code:
-(defvar uuid-surround-mode-to-src-map
-      '(
-        (awk-mode           . "awk")
-        (awk-ts-mode        . "awk")
-        (c++-mode           . "cpp")
-        (c++-ts-mode        . "cpp")
-        (c-mode             . "c")
-        (c-ts-mode          . "c")
-        (cmake-mode         . "cmake")
-        (cmake-ts-mode      . "cmake")
-        (emacs-lisp-mode    . "elisp")
-        (emacs-lisp-ts-mode . "elisp")
-        (haskell-mode       . "haskell")
-        (haskell-ts-mode    . "haskell")
-        (makefile-mode      . "makefile")
-        (makefile-ts-mode   . "makefile")
-        (python-mode        . "python")
-        (python-ts-mode     . "python")
-        (scala-mode         . "scala")
-        (scala-ts-mode      . "scala")
-      ))
-
 
 (defvar uuid-surround-transclude-format
   "#+transclude: [[file:%s::%s]] :lines 2- :src %s :end \"%s end\"")
+
+(defun uuid-surround--src-language (&optional mode)
+  "Return the Org source language corresponding to MODE.
+MODE defaults to `major-mode'.  Prefer a language known to Org, and otherwise
+derive the language from the conventional MODE name."
+  (let* ((mode (or mode major-mode))
+         (mapping
+          (seq-find
+           (lambda (entry)
+             (eq mode (org-src-get-lang-mode (car entry))))
+           org-src-lang-modes))
+         (mode-name (symbol-name mode)))
+    (or (car mapping)
+        (cond
+         ((string-suffix-p "-ts-mode" mode-name)
+          (string-remove-suffix "-ts-mode" mode-name))
+         ((string-suffix-p "-mode" mode-name)
+          (string-remove-suffix "-mode" mode-name)))
+        (user-error "Cannot infer an Org source language from `%s'" mode))))
 
 (defun uuid-surround--blank-line-p ()
   "Return t if line is empty or composed only of syntactic whitespace."
@@ -56,7 +56,7 @@
   (comment-normalize-vars)
   (let* ((uuid (org-id-uuid))
          (name buffer-file-truename)
-         (src-lang (alist-get major-mode uuid-surround-mode-to-src-map))
+         (src-lang (uuid-surround--src-language))
          (prefix-wrap (concat comment-start uuid "\n"))
          (postfix-wrap (concat comment-start uuid " end"))
          (transclude (format uuid-surround-transclude-format name uuid src-lang uuid))
