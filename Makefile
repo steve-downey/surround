@@ -37,6 +37,12 @@ test-compile: ## compile everything
 	# Check declare-function
 	$(EMACS) --batch --eval "(check-declare-directory default-directory)"
 
+.PHONY: test-unit
+test-unit: ## Run ERT unit tests
+	$(EMACS) --batch -Q -L . \
+	      --load test/surround-test.el \
+	      --funcall ert-run-tests-batch-and-exit
+
 .PHONY: realclean
 realclean: ## Clean up everything
 
@@ -46,8 +52,8 @@ clean: ## clean up
 realclean: clean
 
 .PHONY: test
-test: ## Run test compile and clean up
-test: test-compile clean
+test: ## Run unit tests, compile, and clean up
+test: test-unit test-compile clean
 
 ifeq ($(EMACS),)
 
